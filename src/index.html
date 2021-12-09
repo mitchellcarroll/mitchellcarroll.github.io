@@ -9,13 +9,27 @@
 </head>
 
 <body>
-  <h1>Code Assessment</h1>
 
   <main>
+    <h1>Code Assessment</h1>
     <form>
       <fieldset>
-        <div class="countries">
-          <input type="text" placeholder="Enter Country" class="js-country-input">
+        <div class="column-1">
+          <div class="countryInputContainer">
+            <label for="country1">Country #1</label>
+            <input id="country1" type="text" placeholder="Enter a Country" class="js-country-input">
+            <ul class="suggestions">
+            </ul>
+          </div>
+        </div>
+
+        <div class="column-2">
+          <div class="countryInputContainer">
+            <label for="country2">Country #2</label>
+            <input id="country2" type="text" placeholder="Enter a Country" class="js-country-input">
+            <ul class="suggestions">
+            </ul>
+          </div>
         </div>
       </fieldset>
     </form>

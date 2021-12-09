@@ -1,3 +1,10 @@
-export const age: number = 99
+import { Countries } from './countries'
 
-console.log(age)
+document.addEventListener('DOMContentLoaded', () => {
+  const countryInputs: NodeListOf<HTMLInputElement> = document.querySelectorAll(
+    '.js-country-input'
+  )
+
+  const countryOptions = new Countries(countryInputs)
+  countryOptions.initialize()
+})
