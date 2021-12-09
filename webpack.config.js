@@ -9,7 +9,7 @@ module.exports = {
   },
   entry: ['./src/typescript/index.ts'],
 
-  mode: process.env.NODE_ENV || 'production',
+  mode: process.env.NODE_ENV || 'development',
   module: {
     rules: [
       {
@@ -33,5 +33,6 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.ts', '.js']
-  }
+  },
+  target: 'web'
 }
