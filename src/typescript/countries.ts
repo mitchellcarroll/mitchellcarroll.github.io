@@ -1,4 +1,5 @@
 import * as s from './types/swaggerSchema'
+import { CitiesLookup } from './cities'
 
 export class Countries {
   data: s.Components.Schemas.CountriesRow[]
@@ -18,10 +19,11 @@ export class Countries {
           '.suggestions'
         )
         if (suggestionEle != null) {
-          // show initial
-          // this.displayMatches(input, this.data, suggestionEle)
+          input.addEventListener('click', (_event: MouseEvent) => {
+            this.displayMatches(input, suggestionEle)
+          })
 
-          input.addEventListener('keyup', () => {
+          input.addEventListener('keyup', (_event: KeyboardEvent) => {
             this.displayMatches(input, suggestionEle)
           })
         }
@@ -30,7 +32,7 @@ export class Countries {
   }
 
   fetchData () {
-    let data: s.Components.Schemas.CountriesRow[] = []
+    const data: s.Components.Schemas.CountriesRow[] = []
 
     window
       .fetch(
@@ -40,8 +42,6 @@ export class Countries {
       .then((d: s.Components.Schemas.OpenAQCountriesResult) => {
         d.results.forEach(c => data.push(c))
       })
-
-    console.log(data)
 
     return data
   }
@@ -66,5 +66,22 @@ export class Countries {
       .join('')
 
     listEle.innerHTML = html
+    this.setupCountryClick(input, listEle)
+  }
+
+  setupCountryClick (input: HTMLInputElement, listEle: HTMLUListElement) {
+    const listItems: NodeListOf<HTMLLIElement> = listEle.querySelectorAll('li')
+    listItems.forEach(li => {
+      li.addEventListener('click', () => {
+        if (li.dataset.name != undefined) {
+          input.value = li.dataset.name
+        }
+
+        const countryCode = li.dataset.countryCode
+        if (countryCode != undefined && countryCode.length > 0) {
+          new CitiesLookup(countryCode)
+        }
+      })
+    })
   }
 }
