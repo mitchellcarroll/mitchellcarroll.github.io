@@ -3,10 +3,12 @@ import * as s from './types/swaggerSchema'
 export class CitiesLookup {
   countryCode: string
   data: s.Components.Schemas.CitiesRow[]
+  countryInput: HTMLInputElement
 
-  constructor (countryCode: string) {
+  constructor (countryCode: string, countryInput: HTMLInputElement) {
     this.countryCode = countryCode
     this.data = this.fetchData()
+    this.countryInput = countryInput
   }
 
   fetchData () {
@@ -22,5 +24,49 @@ export class CitiesLookup {
       })
 
     return data
+  }
+
+  initialize () {
+    const parent = this.countryInput
+
+    // if (parent != null) {
+    //   const suggestionEle: HTMLUListElement | null = parent.querySelector(
+    //     '.suggestions'
+    //   )
+
+    //   if (suggestionEle != null) {
+    //     input.addEventListener('click', () => {
+    //       this.displayMatches(input, suggestionEle)
+    //     })
+
+    //     input.addEventListener('keyup', () => {
+    //       this.displayMatches(input, suggestionEle)
+    //     })
+    //   }
+    // }
+  }
+
+  findMatches (wordToMatch: string) {
+    return this.data.filter(place => {
+      const regex = new RegExp(wordToMatch, 'gi')
+      // return place.name.match(regex) || place.code.match(regex)
+      return place.city.match(regex)
+    })
+  }
+
+  displayMatches (input: HTMLInputElement, listEle: HTMLUListElement) {
+    const matches = this.findMatches(input.value)
+    const html = matches
+      .map(place => {
+        return `
+      <li class="list-group-item" data-name="${place.city}" data-country="${place.country}" data-location="${place.locations}">
+        <span class="country-name">${place.city}</span>
+      </li>
+    `
+      })
+      .join('')
+
+    listEle.innerHTML = html
+    // this.setupCountryClick(input, listEle)
   }
 }

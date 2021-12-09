@@ -58,7 +58,7 @@ export class Countries {
     const html = matches
       .map(place => {
         return `
-      <li data-name="${place.name}" data-country-code=${place.code}>
+      <li class="list-group-item" data-name="${place.name}" data-country-code=${place.code}>
         <span class="country-name">${place.name}</span>
       </li>
     `
@@ -66,6 +66,18 @@ export class Countries {
       .join('')
 
     listEle.innerHTML = html
+    listEle.classList.add('active')
+
+    window.addEventListener('click', (event: MouseEvent) => {
+      event.stopPropagation()
+      const isOutsideMenu =
+        !listEle.contains(event.target as HTMLElement) &&
+        !input.contains(event.target as HTMLElement)
+
+      if (isOutsideMenu) {
+        listEle.classList.remove('active')
+      }
+    })
     this.setupCountryClick(input, listEle)
   }
 
@@ -79,7 +91,11 @@ export class Countries {
 
         const countryCode = li.dataset.countryCode
         if (countryCode != undefined && countryCode.length > 0) {
-          new CitiesLookup(countryCode)
+          new CitiesLookup(countryCode, input)
+
+          if (listEle.classList.contains('active')) {
+            listEle.classList.remove('active')
+          }
         }
       })
     })
