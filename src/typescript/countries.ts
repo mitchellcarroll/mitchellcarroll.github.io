@@ -55,17 +55,28 @@ export class Countries {
 
   displayMatches (input: HTMLInputElement, listEle: HTMLUListElement) {
     const matches = this.findMatches(input.value)
-    const html = matches
-      .map(place => {
-        return `
+
+    const length = matches.length
+
+    if (length !== 0) {
+      const html = matches
+        .map(place => {
+          return `
       <li class="list-group-item" data-name="${place.name}" data-country-code=${place.code}>
         <span class="country-name">${place.name}</span>
       </li>
     `
-      })
-      .join('')
+        })
+        .join('')
 
-    listEle.innerHTML = html
+      listEle.innerHTML = html
+    } else {
+      const html = `<li class="list-group-item">
+        <span class="country-name">No Result</span>
+      </li>`
+      listEle.innerHTML = html
+    }
+
     listEle.classList.add('active')
 
     window.addEventListener('click', (event: MouseEvent) => {
@@ -91,10 +102,33 @@ export class Countries {
 
         const countryCode = li.dataset.countryCode
         if (countryCode != undefined && countryCode.length > 0) {
-          new CitiesLookup(countryCode, input)
+          const cityInput = new CitiesLookup(countryCode, input)
+          cityInput.initialize()
 
           if (listEle.classList.contains('active')) {
             listEle.classList.remove('active')
+          }
+
+          if (input.id.includes('1')) {
+            const tableBody: HTMLTableSectionElement | null = document.querySelector(
+              '.tableOne tbody'
+            )
+
+            if (tableBody != null) {
+              Array.from(tableBody.rows).forEach(row => {
+                row.remove()
+              })
+            }
+          } else {
+            const tableBody: HTMLTableSectionElement | null = document.querySelector(
+              '.tableTwo tbody'
+            )
+
+            if (tableBody != null) {
+              Array.from(tableBody.rows).forEach(row => {
+                row.remove()
+              })
+            }
           }
         }
       })

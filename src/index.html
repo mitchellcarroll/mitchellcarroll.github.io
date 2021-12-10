@@ -46,8 +46,9 @@
         <div class="row">
           <div class="col column-1">
             <div class="countryInputContainer">
-              <div class="form-floating mb-3">
-                <input id="country1" type="text" placeholder="Enter a Country" class="js-country-input form-control">
+              <div class="form-floating">
+                <input id="country1" type="text" placeholder="Enter a Country" class="js-country-input form-control"
+                  data-city-input="#city1">
                 <label for="country1">Country #1</label>
               </div>
               <ul class="suggestions list-group shadow mb-5 bg-body rounded">
@@ -57,8 +58,9 @@
 
           <div class="col column-2">
             <div class="countryInputContainer">
-              <div class="form-floating mb-3">
-                <input id="country2" type="text" placeholder="Enter a Country" class="js-country-input form-control">
+              <div class="form-floating">
+                <input id="country2" type="text" placeholder="Enter a Country" class="js-country-input form-control"
+                  data-city-input="#city2">
                 <label for="country2">Country #2</label>
               </div>
               <ul class="suggestions list-group shadow mb-5 bg-body rounded">
@@ -71,8 +73,9 @@
         <div class="row">
           <div class="col column-1">
             <div class="cityInputContainer">
-              <div class="form-floating mb-3">
-                <input id="city1" type="text" placeholder="Enter a City" class="js-city-input form-control">
+              <div class="form-floating">
+                <input id="city1" type="text" placeholder="Enter a City" class="js-city-input form-control"
+                  data-table=".tableOne" disabled>
                 <label for="city1">City #1</label>
               </div>
 
@@ -83,8 +86,9 @@
 
           <div class="col column-2">
             <div class="cityInputContainer">
-              <div class="form-floating mb-3">
-                <input id="city2" type="text" placeholder="Enter a City" class="js-city-input form-control">
+              <div class="form-floating">
+                <input id="city2" type="text" placeholder="Enter a City" class="js-city-input form-control"
+                  data-table=".tableTwo" disabled>
                 <label for="city2">City #2</label>
               </div>
               <ul class="suggestions list-group shadow mb-5 bg-body rounded">
@@ -94,7 +98,61 @@
         </div>
       </fieldset>
     </form>
+
+    <div class="row">
+      <div class="col">
+        <table class="table tableOne table-striped">
+          <thead>
+            <th scope="col">Location</th>
+            <th scope="col" data-parameter="o3">O₃</th>
+            <th scope="col" data-parameter="pm25">PM2.5</th>
+            <th scope="col" data-parameter="pm10">PM10</th>
+            <th scope="col" data-parameter="co">CO</th>
+            <th scope="col" data-parameter="so2">
+              SO₂
+            </th>
+            <th data-parameter="no2">NO₂</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col">
+        <table class="table tableTwo table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Location</th>
+              <th scope="col" data-parameter="o3">O₃</th>
+              <th scope="col" data-parameter="pm25">PM2.5</th>
+              <th scope="col" data-parameter="pm10">PM10</th>
+              <th scope="col" data-parameter="co">CO</th>
+              <th scope="col" data-parameter="so2">
+                SO₂
+              </th>
+              <th scope="col" data-parameter="no2">NO₂</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
   </main>
+
+  <template class="tableBodyRow">
+    <tr>
+      <td scope="row" class="siteName"></td>
+      <td data-parameter="o3"></td>
+      <td data-parameter="pm25"></td>
+      <td data-parameter="pm10"></td>
+      <td data-parameter="co"></td>
+      <td data-parameter="so2"></td>
+      <td data-parameter="no2"></td>
+    </tr>
+  </template>
 </body>
 
 </html>
